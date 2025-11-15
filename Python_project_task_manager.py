@@ -67,3 +67,13 @@ class TaskManager:
                 print(f"Task {task_id} marked as complete!")
                 return
         print(f"Task with ID {task_id} not found.")
+    
+    def delete_task(self, task_id):
+        """Delete a task by ID"""
+        for i, task in enumerate(self.tasks):
+            if task['id'] == task_id:
+                self.tasks.pop(i)
+                self.save_tasks()
+                print(f"Task {task_id} deleted successfully!")
+                return
+        print(f"Task with ID {task_id} not found.")
