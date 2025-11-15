@@ -104,3 +104,21 @@ class TaskManager:
                 print("Error loading tasks. Starting fresh.")
         else:
             print("No saved tasks found. Starting fresh.")
+                
+    def search_tasks(self, keyword):
+        """Search tasks by keyword or due date"""
+        results = []
+        keyword_lower = keyword.lower()
+        
+        for task in self.tasks:
+            if (keyword_lower in task['title'].lower() or 
+                keyword_lower in task['description'].lower() or 
+                keyword_lower in task['due_date']):
+                results.append(task)
+        
+        if results:
+            print(f"\nFound {len(results)} task(s):")
+            for task in results:
+                self._display_task(task)
+        else:
+            print("No tasks found matching your search.")
