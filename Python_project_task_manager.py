@@ -77,3 +77,16 @@ class TaskManager:
                 print(f"Task {task_id} deleted successfully!")
                 return
         print(f"Task with ID {task_id} not found.")
+
+    def save_tasks(self):
+        """Save tasks to JSON file"""
+        try:
+            with open(self.filename, 'w') as f:
+                data = {
+                    'tasks': self.tasks,
+                    'next_id': self.next_id
+                }
+                json.dump(data, f, indent=2)
+            print("Tasks saved successfully!")
+        except:
+            print("Error saving tasks.")
