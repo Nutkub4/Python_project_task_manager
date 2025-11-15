@@ -90,3 +90,17 @@ class TaskManager:
             print("Tasks saved successfully!")
         except:
             print("Error saving tasks.")
+
+    def load_tasks(self):
+        """Load tasks from JSON file"""
+        if os.path.exists(self.filename):
+            try:
+                with open(self.filename, 'r') as f:
+                    data = json.load(f)
+                    self.tasks = data.get('tasks', [])
+                    self.next_id = data.get('next_id', 1)
+                print(f"Loaded {len(self.tasks)} tasks.")
+            except:
+                print("Error loading tasks. Starting fresh.")
+        else:
+            print("No saved tasks found. Starting fresh.")
