@@ -30,3 +30,30 @@ class TaskManager:
         self.next_id += 1
         self.save_tasks()
         print(f"Task added successfully! (ID: {task['id']})")    
+
+    def view_tasks(self):
+        """Display all tasks organized by status"""
+        if not self.tasks:
+            print("\nNo tasks found!")
+            return
+        
+        pending = [t for t in self.tasks if not t['completed']]
+        completed = [t for t in self.tasks if t['completed']]
+        
+        print("\n" + "="*50)
+        print("PENDING TASKS")
+        print("="*50)
+        if pending:
+            for task in pending:
+                self._display_task(task)
+        else:
+            print("No pending tasks.")
+        
+        print("\n" + "="*50)
+        print("COMPLETED TASKS")
+        print("="*50)
+        if completed:
+            for task in completed:
+                self._display_task(task)
+        else:
+            print("No completed tasks.")
