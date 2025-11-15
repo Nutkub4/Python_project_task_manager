@@ -122,3 +122,105 @@ class TaskManager:
                 self._display_task(task)
         else:
             print("No tasks found matching your search.")
+
+def validate_date(date_string):
+    """Validate date format (YYYY-MM-DD)"""
+    try:
+        datetime.strptime(date_string, '%Y-%m-%d')
+        return True
+    except:
+        return False
+
+def main():
+    manager = TaskManager()
+    
+    while True:
+        print("\n" + "="*50)
+        print("TASK MANAGER MENU")
+        print("="*50)
+        print("1. Add New Task")
+        print("2. View All Tasks")
+        print("3. Mark Task as Complete")
+        print("4. Delete Task")
+        print("5. Save and Load Tasks")
+        print("6. Search Tasks")
+        print("7. Exit")
+        print("="*50)
+        
+        choice = input("\nEnter your choice (1-7): ").strip()
+        
+        if choice == '1':
+            # Add new task
+            title = input("Enter task title: ").strip()
+            if not title:
+                print("Error: Title cannot be empty!")
+                continue
+            
+            description = input("Enter task description: ").strip()
+            if not description:
+                print("Error: Description cannot be empty!")
+                continue
+            
+            due_date = input("Enter due date (YYYY-MM-DD): ").strip()
+            if not validate_date(due_date):
+                print("Error: Invalid date format! Use YYYY-MM-DD")
+                continue
+            
+            manager.add_task(title, description, due_date)
+        
+        elif choice == '2':
+            # View all tasks
+            manager.view_tasks()
+        
+        elif choice == '3':
+            # Mark task as complete
+            try:
+                task_id = int(input("Enter task ID to mark as complete: "))
+                manager.mark_complete(task_id)
+            except ValueError:
+                print("Error: Please enter a valid number!")
+        
+        elif choice == '4':
+            # Delete task
+            try:
+                task_id = int(input("Enter task ID to delete: "))
+                confirm = input(f"Are you sure you want to delete task {task_id}? (yes/no): ")
+                if confirm.lower() == 'yes':
+                    manager.delete_task(task_id)
+                else:
+                    print("Deletion cancelled.")
+            except ValueError:
+                print("Error: Please enter a valid number!")
+        
+        elif choice == '5':
+            # Save and Load Tasks
+            print("\nSave and Load Options:")
+            print("1. Save tasks manually")
+            print("2. Reload tasks from file")
+            sub_choice = input("Enter choice (1-2): ").strip()
+            
+            if sub_choice == '1':
+                manager.save_tasks()
+            elif sub_choice == '2':
+                manager.load_tasks()
+            else:
+                print("Invalid choice!")
+        
+        elif choice == '6':
+            # Search tasks
+            keyword = input("Enter keyword or date to search: ").strip()
+            if keyword:
+                manager.search_tasks(keyword)
+            else:
+                print("Error: Search term cannot be empty!")
+        
+        elif choice == '7':
+            # Exit
+            print("\nThank you for using Task Manager!")
+            break
+        
+        else:
+            print("Invalid choice! Please enter a number between 1 and 7.")
+
+if __name__ == "__main__":
+    main()
