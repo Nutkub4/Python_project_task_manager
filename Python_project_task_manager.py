@@ -57,3 +57,13 @@ class TaskManager:
                 self._display_task(task)
         else:
             print("No completed tasks.")
+
+    def mark_complete(self, task_id):
+        """Mark a task as complete"""
+        for task in self.tasks:
+            if task['id'] == task_id:
+                task['completed'] = True
+                self.save_tasks()
+                print(f"Task {task_id} marked as complete!")
+                return
+        print(f"Task with ID {task_id} not found.")
